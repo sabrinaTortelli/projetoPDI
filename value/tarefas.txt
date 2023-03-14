@@ -1,7 +1,7 @@
 valor
 RICARDO
-- conversão para tons de cinza (simples e ponderada)
+DONE - conversão para tons de cinza (simples e ponderada)
 - Limiarização
-- Isolar Canais
+DONE - Isolar Canais
 - Histograma -> contar quantos pixels tem e implementar alguma forma de visualizar o - histograma (função pronta)
 - Inverso de uma Imagem

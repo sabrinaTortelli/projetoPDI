@@ -1,13 +1,13 @@
 import cv2
-from PIL.ImageQt import rgb
+
 
 
 class GrayPonder:
     def gray_pixel_manipulation(pixel):
-        pixel[2] = pixel[2] * 0.2989  # r
-        pixel[1] = pixel[1] * 0.5870  # g
-        pixel[0] = pixel[1] * 0.1140  # b
-        return [pixel[2], pixel[1], pixel[0]]
+        pixel[2] = pixel[2] * 0.1140  # blue
+        pixel[1] = pixel[1] * 0.5870  # green
+        pixel[0] = pixel[0] * 0.2989  # red
+        return [pixel[0], pixel[1], pixel[2]]
 
 
 class GrayScale(object):
