@@ -28,5 +28,7 @@ class Histogram(object):
 
     def plot_hist(self):
         #chama o método pixel_counter e imprime um gráfico com os valores obtidos
+        plt.xlabel("Intensity")
+        plt.ylabel("Number")
         plt.hist(self.pixel_counter())
         plt.show()

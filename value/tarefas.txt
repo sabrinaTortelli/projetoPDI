@@ -3,5 +3,5 @@ RICARDO
 DONE - conversão para tons de cinza (simples e ponderada)
 - Limiarização
 DONE - Isolar Canais
-- Histograma -> contar quantos pixels tem e implementar alguma forma de visualizar o - histograma (função pronta)
+DONE - Histograma -> contar quantos pixels tem e implementar alguma forma de visualizar o - histograma (função pronta)
 - Inverso de uma Imagem
