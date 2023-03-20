@@ -5,7 +5,7 @@ from value.histogram import Histogram as Hs
 
 
 if __name__ == '__main__':
-    img = IP("joker.jpg")
+    img = IP("dog.jpg")
     #img = IP("dog.jpg")
     #img.show_image("Teste")
     #img.save_image("Test014")
