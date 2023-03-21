@@ -23,8 +23,7 @@ class Histogram(object):
     def pixel_counter(self):
         # percorre tudas as colunas e linhas da imagem recebida no init
         # e extraindo os valores RGB e retorna em uma lista
-        pixel_counter = [self.image[i][j][c] for i in range(self.row) for j in range(self.col) for c in range(3)]
-        return pixel_counter
+        return [self.image[i][j][c] for i in range(self.row) for j in range(self.col) for c in range(3)]
 
     def plot_hist(self):
         #chama o método pixel_counter e imprime um gráfico com os valores obtidos
