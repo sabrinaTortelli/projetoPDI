@@ -38,3 +38,18 @@ class GrayScale(object):
         cv2.imshow('Ponder Grayscale Image', self.image)
         cv2.waitKey(0)
         return self.image
+
+    def threshold(self, pixel_intensity):
+        #recebe uma matriz imagem cinza e percorre todas as linhas e colunas
+        #somando os pixels RGB de cada posicão e faz a média simples
+        #se a soma for mair que o pixel intesity ele é convertido para branco 255
+        #se a soma for menor que o pixel intesity ele é convertido para preto 0
+        for i in range(self.row):
+            for j in range(self.col):
+                if sum(self.image[i, j]) > pixel_intensity:
+                    self.image[i, j] = 255
+                else:
+                    self.image[i, j] = 0
+        cv2.imshow('Black and White Image', self.image)
+        cv2.waitKey(0)
+        return self.image
