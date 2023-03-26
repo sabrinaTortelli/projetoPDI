@@ -9,7 +9,7 @@ class NegativeImage(object):
         self.col = self.image.shape[1]
 
     def negative_image(self):
-        # percorre tudas as colunas e linhas da imagem recebida no init
+        # percorre todas as colunas e linhas da imagem recebida no init
         # e extraindo os valores RGB e retorna em uma lista
         negative_image = [self.image[i, j].__setitem__(k, 255 - self.image[i, j][k]) for i in range(self.row) for j in
                          range(self.col) for k in range(3)]

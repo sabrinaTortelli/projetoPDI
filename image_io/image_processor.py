@@ -5,10 +5,10 @@ import pkg_resources
 
 
 class ImageProcessor(object):
-    def __init__(self, selected_image):
+    def __init__(self, selected_image, flag):
         # imread leva 2 params: image path e flag. Flag 1 le a imagem colorida, 0 ou -1 le a imagem em tons de cinza
         # pkg_resources.resource_filename leva o nome do package e o path dentro do package para ler arquivos
-        self.image = cv2.imread(pkg_resources.resource_filename('images', 'SampleImages/' + selected_image), 1)
+        self.image = cv2.imread(pkg_resources.resource_filename('images', 'SampleImages/' + selected_image), flag)
 
     def show_image(self, window_name):
         # mostra a imagem. waitKey 0 mantem a imagem aberta, 0 é um valor em milisec e pode ser ajustado
