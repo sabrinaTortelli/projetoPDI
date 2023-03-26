@@ -1,0 +1,13 @@
+1 - Convolução Simples - ok - imagens cinzas e rgb
+2 - Morfologia Matemática
+    2.1 - Dilatação
+    2.2 - Erosão
+    2.3 - Abertura
+    2.4 - Fechamento
+    2.5 - Limite externo
+    2.6 - Limite interno
+
+3 - Segmentação (básica)
+    3.1 -Roberts - ok - imagens cinzas e rgb
+    3.2 - Sobel - ok - imagens cinzas e rgb
+    3.3 - Robinson
