@@ -70,6 +70,8 @@ def test_negative_image():
     img = IP("joker.jpg", 1)
     negative_image = NI(img.return_image_object())
     list_img = negative_image.negative_image()
+    s = SI(list_img)
+    s.save_image("test_negative_image")
     print(list_img)
 
 
@@ -295,7 +297,7 @@ if __name__ == '__main__':
     # test_blue_channel()
     # test_histogram()
     # test_threshold()
-    # test_negative_image()
+    test_negative_image()
 
     ## Testes de espaço
 
@@ -318,7 +320,7 @@ if __name__ == '__main__':
     # test_rgb_convolution_mask_detectar_relevos()
 
     ### Teste segmentação imagens gray
-    # test_gray_segmentation_roberts()
+    #test_gray_segmentation_roberts()
     # test_gray_segmentation_sobel()
     # test_rgb_segmentation_roberts()
     # test_rgb_segmentation_sobel()
