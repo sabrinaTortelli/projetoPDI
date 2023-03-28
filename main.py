@@ -236,13 +236,13 @@ def test_rgb_segmentation_sobel():
 
 if __name__ == '__main__':
     ##Testes de valor
-    # test_gray_simple_convert()
-    # test_gray_ponder_convert()
-    # test_red_channel()
-    # test_green_channel()
-    # test_blue_channel()
+    #test_gray_simple_convert()
+    #test_gray_ponder_convert()
+    #test_red_channel()
+    #test_green_channel()
+    #test_blue_channel()
     # test_histogram()
-    # test_threshold()
+    test_threshold()
     # test_negative_image()
 
     ## Testes de espaço

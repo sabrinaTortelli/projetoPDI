@@ -4,23 +4,12 @@ import numpy as np
 
 class RGBChannelExtractor:
 
-    def red_pixel_extractor(pixel):
-        # recebe um pixel e zera o seu valor para verde e azul
-        pixel[1] = 0  # green
-        pixel[2] = 0  # blue
-        return [pixel[2], pixel[1], pixel[0]]
-
-    def green_pixel_extractor(pixel):
-        # recebe um pixel e zera o seu valor para vermelho e azul
-        pixel[2] = 0  # blue
-        pixel[0] = 0  # red
-        return [pixel[2], pixel[1], pixel[0]]
-
-    def blue_pixel_extractor(pixel):
-        # recebe um pixel e zera o seu valor para verde e vermelho
-        pixel[0] = 0  # red
-        pixel[1] = 0  # green
-        return [pixel[2], pixel[1], pixel[0]]
+    def pixel_extractor(pixel, rgb):
+        # recebe um pixel e extrai o canal escolhido
+        # rgb esta invertido [0] blue, [1] green, [2] red
+        isolated_pixel = [0, 0, 0]
+        isolated_pixel[rgb] = pixel[rgb]
+        return isolated_pixel
 
 
 class Extractor(object):
@@ -31,36 +20,55 @@ class Extractor(object):
         self.row = self.image.shape[0]
         self.col = self.image.shape[1]
         self.extracted_isolated_channel_image = np.zeros((self.row, self.col, self.image.shape[2]), np.uint8)
+        # self.extracted_isolated_channel_image2 = np.zeros((self.row, self.col, self.image.shape[2]), np.uint8)
 
     def red_channel(self):
         # recebe uma matriz imagem e percorre todas as linhas e colunas
-        # chamando o extrator de pixels vermelho
+        # chamando o extrator de pixels com valor 1 para vermelho
         # deixando a imgem com tons de vermelho
-        for i in range(self.row):
-            for j in range(self.col):
-                self.extracted_isolated_channel_image[i, j] = RGBChannelExtractor.red_pixel_extractor(self.image[i, j])
-        cv2.imshow('Red Channel', self.extracted_isolated_channel_image)
+
+        [self.extracted_isolated_channel_image[i, j].__setitem__(k, (
+            RGBChannelExtractor.pixel_extractor(self.image[i, j], 2))[k]) for i in range(self.row) for j in
+         range(self.col) for k in range(3)]
+
+        cv2.imshow('Red Channel', np.concatenate((self.image, self.extracted_isolated_channel_image), axis=1))
         cv2.waitKey(0)
         return self.extracted_isolated_channel_image
 
     def green_channel(self):
         # recebe uma matriz imagem e percorre todas as linhas e colunas
-        # chamando o extrator de pixels verde
+        # chamando o extrator de pixels com valor 1 para verde
         # deixando a imgem com tons de verde
-        for i in range(self.row):
-            for j in range(self.col):
-                self.extracted_isolated_channel_image[i, j] = RGBChannelExtractor.green_pixel_extractor(self.image[i, j])
-        cv2.imshow('Green Channel', self.extracted_isolated_channel_image)
+
+        [self.extracted_isolated_channel_image[i, j].__setitem__(k, (
+            RGBChannelExtractor.pixel_extractor(self.image[i, j], 1))[k]) for i in range(self.row) for j in
+         range(self.col) for k in range(3)]
+
+        cv2.imshow('Green Channel', np.concatenate((self.image, self.extracted_isolated_channel_image), axis=1))
         cv2.waitKey(0)
         return self.extracted_isolated_channel_image
 
     def blue_channel(self):
         # recebe uma matriz imagem e percorre todas as linhas e colunas
-        # chamando o extrator de pixels azul
+        # chamando o extrator de pixels com valor 0 para azul
         # deixando a imgem com tons de azul
-        for i in range(self.row):
-            for j in range(self.col):
-                self.extracted_isolated_channel_image[i, j] = RGBChannelExtractor.blue_pixel_extractor(self.image[i, j])
-        cv2.imshow('Blue Channel', self.extracted_isolated_channel_image)
+
+        [self.extracted_isolated_channel_image[i, j].__setitem__(k, (
+            RGBChannelExtractor.pixel_extractor(self.image[i, j], 0))[k]) for i in range(self.row) for j in
+         range(self.col) for k in range(3)]
+
+        cv2.imshow('Blue Channel', np.concatenate((self.image, self.extracted_isolated_channel_image), axis=1))
         cv2.waitKey(0)
         return self.extracted_isolated_channel_image
+
+# LOOP ORIGINAL
+#    def green_channel(self):
+#    # recebe uma matriz imagem e percorre todas as linhas e colunas
+#    # chamando o extrator de pixels com valor 1 para verde
+#    # deixando a imgem com tons de verde
+#        for i in range(self.row):
+#            for j in range(self.col):
+#                self.extracted_isolated_channel_image[i, j] = RGBChannelExtractor.pixel_extractor(self.image[i, j],1)
+#        cv2.imshow('Green Channel', self.extracted_isolated_channel_image)
+#        cv2.waitKey(0)
+#        return self.extracted_isolated_channel_image

@@ -5,10 +5,10 @@ import numpy as np
 class GrayPonder:
     # recebe um pixel a multiplica os valores RGB para calcular a média ponderada
     def gray_pixel_manipulation(pixel):
-        pixel[2] = pixel[2] * 0.1140  # blue
-        pixel[1] = pixel[1] * 0.5870  # green
-        pixel[0] = pixel[0] * 0.2989  # red
-        return [pixel[0], pixel[1], pixel[2]]
+        #recebe pixel e aplica a multiplicação nos valores RGB invertido
+        # [0] blue, [1] green, [2] red
+        gray_pixel = [pixel[0] * 0.1140, pixel[1] * 0.5870, pixel[2] * 0.2999]
+        return gray_pixel
 
 
 class GrayScale(object):
@@ -27,7 +27,7 @@ class GrayScale(object):
         for i in range(self.row):
             for j in range(self.col):
                 self.extracted_grayscale_image[i, j] = sum(self.image[i, j]) * 0.33
-        cv2.imshow('Simple Grayscale Image', self.extracted_grayscale_image)
+        cv2.imshow('Simple Grayscale Image', np.concatenate((self.image,self.extracted_grayscale_image), axis=1))
         cv2.waitKey(0)
         return self.extracted_grayscale_image
 
@@ -38,7 +38,7 @@ class GrayScale(object):
         for i in range(self.row):
             for j in range(self.col):
                 self.extracted_grayscale_image[i, j] = sum(GrayPonder.gray_pixel_manipulation(self.image[i, j]))
-        cv2.imshow('Ponder Grayscale Image', self.extracted_grayscale_image)
+        cv2.imshow('Ponder Grayscale Image', np.concatenate((self.image, self.extracted_grayscale_image), axis=1))
         cv2.waitKey(0)
         return self.extracted_grayscale_image
 
@@ -53,6 +53,7 @@ class GrayScale(object):
                     self.extracted_binary_image[i, j] = 255
                 else:
                     self.extracted_binary_image[i, j] = 0
-        cv2.imshow('Black and White Image', self.extracted_binary_image)
+        cv2.imshow('Binary Image', np.concatenate((self.image, self.extracted_grayscale_image, self.extracted_binary_image), axis=1))
         cv2.waitKey(0)
+
         return self.extracted_binary_image

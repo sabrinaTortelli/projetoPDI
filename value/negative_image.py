@@ -16,7 +16,7 @@ class NegativeImage(object):
         [self.extracted_negative_image[i, j].__setitem__(k, 255 - self.image[i, j][k]) for i in range(self.row) for j in
                          range(self.col) for k in range(3)]
 
-        cv2.imshow('Negative Image', self.extracted_negative_image)
+        cv2.imshow('Negative Image', np.concatenate((self.image, self.extracted_negative_image), axis=1))
         cv2.waitKey(0)
         return self.extracted_negative_image
 
