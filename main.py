@@ -27,24 +27,21 @@ def test_gray_ponder_convert():
 def test_blue_channel():
     img = IP("joker.jpg", 1)
     chan_img = EX(img.return_image_object())
-    transformed_img = chan_img.blue_channel()
-    img_save = SI(transformed_img)
+    img_save = SI(chan_img.blue_channel())
     img_save.save_image("blue_channel_test_joker")
 
 
 def test_red_channel():
     img = IP("joker.jpg", 1)
     chan_img = EX(img.return_image_object())
-    transformed_img = chan_img.red_channel()
-    img_save = SI(transformed_img)
+    img_save = SI(chan_img.red_channel())
     img_save.save_image("red_channel_test_joker")
 
 
 def test_green_channel():
     img = IP("joker.jpg", 1)
     chan_img = EX(img.return_image_object())
-    transformed_img = chan_img.green_channel()
-    img_save = SI(transformed_img)
+    img_save = SI(chan_img.green_channel())
     img_save.save_image("green_channel_test_joker")
 
 
@@ -245,7 +242,7 @@ if __name__ == '__main__':
     # test_green_channel()
     # test_blue_channel()
     # test_histogram()
-    test_threshold()
+    # test_threshold()
     # test_negative_image()
 
     ## Testes de espaço
