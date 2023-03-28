@@ -15,16 +15,14 @@ from arithmetic_operations.arithmetic_operations_images import ArithmeticOperati
 def test_gray_simple_convert():
     img = IP("joker.jpg", 1)
     gray_img = GS(img.return_image_object())
-    transformed_img = gray_img.gray_convert_simple()
-    img_save = SI(transformed_img)
+    img_save = SI(gray_img.gray_convert_simple())
     img_save.save_image("gray_simple_test_joker")
 
 
 def test_gray_ponder_convert():
     img = IP("joker.jpg", 1)
     gray_img = GS(img.return_image_object())
-    transformed_img = gray_img.gray_convert_ponder()
-    img_save = SI(transformed_img)
+    img_save = SI(gray_img.gray_convert_ponder())
     img_save.save_image("gray_ponder_test_joker")
 
 
@@ -61,17 +59,15 @@ def test_threshold():
     img = IP("joker.jpg", 1)
     gray_img = GS(img.return_image_object())
     gray_img.gray_convert_ponder()
-    transformed_img = gray_img.threshold(200)
-    img_save = SI(transformed_img)
+    img_save = SI(gray_img.threshold(200))
     img_save.save_image("threshold_test_joker")
 
 
 def test_negative_image():
     img = IP("joker.jpg", 1)
     negative_image = NI(img.return_image_object())
-    list_img = negative_image.negative_image()
-    s = SI(list_img)
-    s.save_image("test_negative_image")
+    list_img = SI(negative_image.negative_image())
+    list_img.save_image("test_negative_image")
     print(list_img)
 
 
@@ -296,8 +292,8 @@ if __name__ == '__main__':
     # test_green_channel()
     # test_blue_channel()
     # test_histogram()
-    # test_threshold()
-    test_negative_image()
+    test_threshold()
+    # test_negative_image()
 
     ## Testes de espaço
 
