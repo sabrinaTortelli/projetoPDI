@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Histogram(object):
@@ -23,10 +24,34 @@ class Histogram(object):
     def pixel_counter(self):
         # percorre tudas as colunas e linhas da imagem recebida no init
         # e extraindo os valores RGB e retorna em uma lista
-        return [self.image[i][j][c] for i in range(self.row) for j in range(self.col) for c in range(3)]
+        values = [0 for i in range(256)]
+        list = [self.image[i][j][c] for i in range(self.row) for j in range(self.col) for c in range(3)]
+
+        for i in list:
+            value = i
+            values[value] += 1
+            print(i)
+
+        #return para plot_hist2
+        #return list
+
+        # return para plot_hist
+        return values
 
     def plot_hist(self):
-        #chama o método pixel_counter e imprime um gráfico com os valores obtidos
+        # chama o método pixel_counter e imprime um gráfico com os valores obtidos
+
+        x = np.array(range(256))
+        y = np.array(self.pixel_counter())
+
+        plt.title("Image line Graph")
+        plt.xlabel("Intensity")
+        plt.ylabel("Number")
+        plt.plot(x, y, color="red")
+        plt.show()
+
+    def plot_hist2(self):
+        # chama o método pixel_counter e imprime um gráfico com os valores obtidos
         plt.xlabel("Intensity")
         plt.ylabel("Number")
         plt.hist(self.pixel_counter())
