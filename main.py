@@ -46,7 +46,7 @@ def test_green_channel():
 
 
 def test_histogram():
-    img = IP("joker.jpg", 1)
+    img = IP("gray_image_tree.jpg", 1)
     Hs(img.return_image_object()).plot_hist()
 
 

@@ -9,7 +9,7 @@ class Histogram(object):
         self.image = image
         self.row = self.image.shape[0]
         self.col = self.image.shape[1]
-        self.pixel_counter = self.pixel_counter
+        self.pixels = self.pixel_counter
 
     # def pixel_counter(self):
     #    [pixel for pixel in self.row ]
@@ -22,32 +22,34 @@ class Histogram(object):
     #    return pixel_counter
 
     def pixel_counter(self):
-        # percorre tudas as colunas e linhas da imagem recebida no init
-        # e extraindo os valores RGB e retorna em uma lista
-        values = [0 for i in range(256)]
-        list = [self.image[i][j][c] for i in range(self.row) for j in range(self.col) for c in range(3)]
-
-        for i in list:
-            value = i
-            values[value] += 1
-            print(i)
-
-        #return para plot_hist2
-        #return list
-
-        # return para plot_hist
-        return values
+        # retorna pixel counter [ azul, verde, vermelho]
+        # é uma lista de 3 listas de 256 posições
+        # cada lista corresponde ao BGR da imagem e guarda a soma de cada intensidade do mesmo
+        # o metodo percorre o self image para popular a lista pixel counter
+        pixel_counter = [[0 for i in range(256)], [0 for i in range(256)], [0 for i in range(256)]]
+        for i in range(self.row):
+            for j in range(self.col):
+                pixel_counter[0][self.image[i, j][0]] += 1
+                pixel_counter[1][self.image[i, j][1]] += 1
+                pixel_counter[2][self.image[i, j][2]] += 1
+        # print ("YO")
+        return pixel_counter
 
     def plot_hist(self):
         # chama o método pixel_counter e imprime um gráfico com os valores obtidos
+        pixels = self.pixel_counter()
 
         x = np.array(range(256))
-        y = np.array(self.pixel_counter())
+        blue = np.array(pixels[0])
+        green = np.array(pixels[1])
+        red = np.array(pixels[2])
 
         plt.title("Image line Graph")
         plt.xlabel("Intensity")
         plt.ylabel("Number")
-        plt.plot(x, y, color="red")
+        plt.plot(x, blue, color="blue")
+        plt.plot(x, green, color="green")
+        plt.plot(x, red, color="red")
         plt.show()
 
     def plot_hist2(self):
