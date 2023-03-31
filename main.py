@@ -13,45 +13,40 @@ from space.segmentation import Segmentation as SG
 def test_gray_simple_convert():
     img = IP("joker.jpg", 1)
     gray_img = GS(img.return_image_object())
-    transformed_img = gray_img.gray_convert_simple()
-    img_save = SI(transformed_img)
+    img_save = SI(gray_img.gray_convert_simple())
     img_save.save_image("gray_simple_test_joker")
 
 
 def test_gray_ponder_convert():
     img = IP("joker.jpg", 1)
     gray_img = GS(img.return_image_object())
-    transformed_img = gray_img.gray_convert_ponder()
-    img_save = SI(transformed_img)
+    img_save = SI(gray_img.gray_convert_ponder())
     img_save.save_image("gray_ponder_test_joker")
 
 
 def test_blue_channel():
     img = IP("joker.jpg", 1)
     chan_img = EX(img.return_image_object())
-    transformed_img = chan_img.blue_channel()
-    img_save = SI(transformed_img)
+    img_save = SI(chan_img.blue_channel())
     img_save.save_image("blue_channel_test_joker")
 
 
 def test_red_channel():
     img = IP("joker.jpg", 1)
     chan_img = EX(img.return_image_object())
-    transformed_img = chan_img.red_channel()
-    img_save = SI(transformed_img)
+    img_save = SI(chan_img.red_channel())
     img_save.save_image("red_channel_test_joker")
 
 
 def test_green_channel():
     img = IP("joker.jpg", 1)
     chan_img = EX(img.return_image_object())
-    transformed_img = chan_img.green_channel()
-    img_save = SI(transformed_img)
+    img_save = SI(chan_img.green_channel())
     img_save.save_image("green_channel_test_joker")
 
 
 def test_histogram():
-    img = IP("joker.jpg", 1)
+    img = IP("gray_image_tree.jpg", 1)
     Hs(img.return_image_object()).plot_hist()
 
 
@@ -59,15 +54,15 @@ def test_threshold():
     img = IP("joker.jpg", 1)
     gray_img = GS(img.return_image_object())
     gray_img.gray_convert_ponder()
-    transformed_img = gray_img.threshold(200)
-    img_save = SI(transformed_img)
+    img_save = SI(gray_img.threshold(200))
     img_save.save_image("threshold_test_joker")
 
 
 def test_negative_image():
     img = IP("joker.jpg", 1)
     negative_image = NI(img.return_image_object())
-    list_img = negative_image.negative_image()
+    list_img = SI(negative_image.negative_image())
+    list_img.save_image("test_negative_image")
     print(list_img)
 
 
@@ -241,12 +236,12 @@ def test_rgb_segmentation_sobel():
 
 if __name__ == '__main__':
     ##Testes de valor
-    # test_gray_simple_convert()
-    # test_gray_ponder_convert()
-    # test_red_channel()
-    # test_green_channel()
-    # test_blue_channel()
-    # test_histogram()
+    #test_gray_simple_convert()
+    #test_gray_ponder_convert()
+    #test_red_channel()
+    #test_green_channel()
+    #test_blue_channel()
+    test_histogram()
     # test_threshold()
     # test_negative_image()
 
@@ -271,7 +266,7 @@ if __name__ == '__main__':
     # test_rgb_convolution_mask_detectar_relevos()
 
     ### Teste segmentação imagens gray
-    # test_gray_segmentation_roberts()
+    #test_gray_segmentation_roberts()
     # test_gray_segmentation_sobel()
     # test_rgb_segmentation_roberts()
     # test_rgb_segmentation_sobel()
