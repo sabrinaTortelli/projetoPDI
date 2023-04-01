@@ -9,6 +9,8 @@ from space.convolution import Convolution as CVLT
 from image_io.save_image import SaveImage as SI
 from space.segmentation import Segmentation as SG
 
+from arithmetic_operations.arithmetic_operations_images import ArithmeticOperationsImages as AOI
+
 
 def test_gray_simple_convert():
     img = IP("joker.jpg", 1)
@@ -233,8 +235,53 @@ def test_rgb_segmentation_sobel():
     img_save = SI(transformed_img)
     img_save.save_image("rgb_segmentation_sobel_test_joker")
 
+def test_subtraction():
+    img = IP("aberta.jpg", 1)
+    imgS = IP("fechada.jpg", 1)
+    width = int(img.return_image_object().shape[1])
+    height = int(img.return_image_object().shape[0])
+    dim = (width, height)
+    resized = cv2.resize(imgS.return_image_object(), dim)
+    result_image = AOI(img.return_image_object(), resized)
+    result_image.sub_operation()
+
+def test_addition():
+    img = IP("aberta.jpg", 1)
+    imgS = IP("fechada.jpg", 1)
+    width = int(img.return_image_object().shape[1])
+    height = int(img.return_image_object().shape[0])
+    dim = (width, height)
+    resized = cv2.resize(imgS.return_image_object(), dim)
+    result_image = AOI(img.return_image_object(), resized)
+    result_image.add_operation()
+
+def test_multiplication():
+    img = IP("aberta.jpg", 1)
+    imgS = IP("fechada.jpg", 1)
+    width = int(img.return_image_object().shape[1])
+    height = int(img.return_image_object().shape[0])
+    dim = (width, height)
+    resized = cv2.resize(imgS.return_image_object(), dim)
+    result_image = AOI(img.return_image_object(), resized)
+    result_image.mult_operation()
+
+def test_division():
+    img = IP("aberta.jpg", 1)
+    imgS = IP("fechada.jpg", 1)
+    width = int(img.return_image_object().shape[1])
+    height = int(img.return_image_object().shape[0])
+    dim = (width, height)
+    resized = cv2.resize(imgS.return_image_object(), dim)
+    result_image = AOI(img.return_image_object(), resized)
+    result_image.div_operation()
 
 if __name__ == '__main__':
+    ### Testes de aritmética
+    # test_subtraction()
+    # test_addition()
+    # test_multiplication()
+    # test_division()
+
     ##Testes de valor
     #test_gray_simple_convert()
     #test_gray_ponder_convert()
