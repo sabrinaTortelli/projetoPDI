@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 from image_io.image_processor import ImageProcessor as IP
 from value.gray_scale import GrayScale as GS
@@ -8,8 +9,14 @@ from value.negative_image import NegativeImage as NI
 from space.convolution import Convolution as CVLT
 from image_io.save_image import SaveImage as SI
 from space.segmentation import Segmentation as SG
-
+from morphology.erode import Erode as ER
+from morphology.dilate import Dilate as DL
+from morphology.opening import Opening as OP
+from morphology.closure import Closure as CL
+from morphology.outer_limit import OuterLimit as OL
+from morphology.inner_limit import InnerLimit as IL
 from arithmetic_operations.arithmetic_operations_images import ArithmeticOperationsImages as AOI
+from arithmetic_operations.arithmetic_operations_value import ArithmeticOperationsValue as AOV
 
 
 def test_gray_simple_convert():
@@ -81,6 +88,13 @@ def test_gray_convolution_mask():
     transformed_img = convolution_img.convolution()
     img_save = SI(transformed_img)
     img_save.save_image("gray_convolution_test_joker")
+    # teste - outra forma de criar um kernel
+    element_np = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
+    # testando meu resultado com a implementação do opencv
+    con_opencv = cv2.filter2D(src=img.return_image_object(), ddepth=-1, kernel=element_np)
+    cv2.imshow("Teste OpenCV Convolucao", con_opencv)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 
 def test_gray_convolution_mask_laplace():
@@ -145,6 +159,13 @@ def test_rgb_convolution_mask():
     transformed_img = convolution_img.convolution()
     img_save = SI(transformed_img)
     img_save.save_image("rgb_convolution_test_simpsons")
+    # teste - outra forma de criar um kernel
+    element_np = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
+    # testando meu resultado com a implementação do opencv
+    con_opencv = cv2.filter2D(src=img.return_image_object(), ddepth=-1, kernel=element_np)
+    cv2.imshow("Teste OpenCV Convolucao", con_opencv)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 
 def test_rgb_convolution_mask_laplace():
@@ -205,7 +226,8 @@ def test_rgb_convolution_mask_detectar_relevos():
 
 
 def test_gray_segmentation_roberts():
-    img = IP("joker.jpg", 0)
+    # teste com imagem em tons de cinza 2 canais
+    img = IP("gray_simple_test_joker.jpg", 0)
     roberts_image = SG(img.return_image_object())
     transformed_img = roberts_image.roberts()
     img_save = SI(transformed_img)
@@ -220,8 +242,17 @@ def test_gray_segmentation_sobel():
     img_save.save_image("gray_segmentation_sobel_test_joker")
 
 
+def test_gray_segmentation_robinson():
+    img = IP("joker.jpg", 0)
+    robinson_image = SG(img.return_image_object())
+    transformed_img = robinson_image.robinson()
+    img_save = SI(transformed_img)
+    img_save.save_image("gray_segmentation_robinson_test_joker")
+
+
 def test_rgb_segmentation_roberts():
-    img = IP("joker.jpg", 1)
+    # teste com imagem em tons de cinza
+    img = IP("gray_simple_test_joker.jpg", 1)
     roberts_image = SG(img.return_image_object())
     transformed_img = roberts_image.roberts()
     img_save = SI(transformed_img)
@@ -235,6 +266,7 @@ def test_rgb_segmentation_sobel():
     img_save = SI(transformed_img)
     img_save.save_image("rgb_segmentation_sobel_test_joker")
 
+
 def test_subtraction():
     img = IP("aberta.jpg", 1)
     imgS = IP("fechada.jpg", 1)
@@ -243,7 +275,19 @@ def test_subtraction():
     dim = (width, height)
     resized = cv2.resize(imgS.return_image_object(), dim)
     result_image = AOI(img.return_image_object(), resized)
-    result_image.sub_operation()
+    transformed_img = result_image.sub_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("sub_operation_test_aberta_fechada")
+
+
+def test_value_subtraction():
+    img = IP("aberta.jpg", 1)
+    value = 100
+    result_image = AOV(img.return_image_object(), value)
+    transformed_img = result_image.sub_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("sub_operation_value_test_aberta")
+
 
 def test_addition():
     img = IP("aberta.jpg", 1)
@@ -253,7 +297,19 @@ def test_addition():
     dim = (width, height)
     resized = cv2.resize(imgS.return_image_object(), dim)
     result_image = AOI(img.return_image_object(), resized)
-    result_image.add_operation()
+    transformed_img = result_image.add_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("add_operation_test_aberta_fechada")
+
+
+def test_value_addition():
+    img = IP("aberta.jpg", 1)
+    value = 80
+    result_image = AOV(img.return_image_object(), value)
+    transformed_img = result_image.add_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("add_operation_value_test_aberta")
+
 
 def test_multiplication():
     img = IP("aberta.jpg", 1)
@@ -263,7 +319,19 @@ def test_multiplication():
     dim = (width, height)
     resized = cv2.resize(imgS.return_image_object(), dim)
     result_image = AOI(img.return_image_object(), resized)
-    result_image.mult_operation()
+    transformed_img = result_image.mult_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("mult_operation_test_aberta_fechada")
+
+
+def test_value_multiplication():
+    img = IP("aberta.jpg", 1)
+    value = 5
+    result_image = AOV(img.return_image_object(), value)
+    transformed_img = result_image.mult_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("mult_operation_value_test_aberta")
+
 
 def test_division():
     img = IP("aberta.jpg", 1)
@@ -273,26 +341,152 @@ def test_division():
     dim = (width, height)
     resized = cv2.resize(imgS.return_image_object(), dim)
     result_image = AOI(img.return_image_object(), resized)
+    transformed_img = result_image.div_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("div_operation_test_aberta_fechada")
+
+
+def test_value_division():
+    img = IP("aberta.jpg", 1)
+    value = 5
+    result_image = AOV(img.return_image_object(), value)
+    transformed_img = result_image.div_operation()
+    img_save = SI(transformed_img)
+    img_save.save_image("div_operation_value_test_aberta")
+
+
+def test_value_division_error():
+    img = IP("aberta.jpg", 1)
+    value = 0
+    result_image = AOV(img.return_image_object(), value)
     result_image.div_operation()
 
+
+def test_rgb_segmentation_robinson():
+    img = IP("joker.jpg", 1)
+    robinson_image = SG(img.return_image_object())
+    transformed_img = robinson_image.robinson()
+    img_save = SI(transformed_img)
+    img_save.save_image("rgb_segmentation_robinson_test_joker")
+
+
+def test_erode():
+    # imagens em 1 canal
+    img = IP("j.png", 0)
+    kernel_5x5 = np.ones((5, 5), np.uint8)
+    kernel_3x3 = np.ones((3, 3), np.uint8)
+    erode = ER(img.return_image_object(), kernel_5x5)
+    erode_image1 = erode.erode()
+    erode = ER(img.return_image_object(), kernel_3x3)
+    erode_image2 = erode.erode()
+    result_erode = cv2.hconcat([img.return_image_object(), erode_image1, erode_image2])
+    img_save = SI(erode_image1)
+    img_save.save_image("erode_test_j_kernel_5x5")
+    img_save = SI(erode_image2)
+    img_save.save_image("erode_test_j_kernel_3x3")
+    cv2.imshow('Erosion: Original - Result 5x5 - Result 3x3', result_erode)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def test_dilate():
+    # imagens em 1 canal
+    img = IP("j.png", 0)
+    kernel_5x5 = np.ones((5, 5), np.uint8)
+    kernel_3x3 = np.ones((3, 3), np.uint8)
+    dilate = DL(img.return_image_object(), kernel_5x5)
+    dilate_image1 = dilate.dilate()
+    dilate = DL(img.return_image_object(), kernel_3x3)
+    dilate_image2 = dilate.dilate()
+    result_dilate = cv2.hconcat([img.return_image_object(), dilate_image1, dilate_image2])
+    img_save = SI(dilate_image1)
+    img_save.save_image("dilate_test_j_kernel_5x5")
+    img_save = SI(dilate_image2)
+    img_save.save_image("dilate_test_j_kernel_3x3")
+    cv2.imshow('Dilate: Original - Result 5x5 - Result 3x3', result_dilate)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def test_opening():
+    img = IP("j.png", 0)
+    kernel_5x5 = np.ones((5, 5), np.uint8)
+    open_image = OP(img.return_image_object(), kernel_5x5)
+    result_image = open_image.opening()
+    img_save = SI(result_image)
+    img_save.save_image("opening_test_j_kernel_5x5")
+    opening_cv = cv2.morphologyEx(img.return_image_object(), cv2.MORPH_OPEN, kernel_5x5)
+    result_opening = cv2.hconcat([img.return_image_object(), result_image, opening_cv])
+    cv2.imshow('Opening: Original - Our code - CV Code', result_opening)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def test_closing():
+    img = IP("j.png", 0)
+    kernel_5x5 = np.ones((5, 5), np.uint8)
+    closure_image = CL(img.return_image_object(), kernel_5x5)
+    result_image = closure_image.closure()
+    img_save = SI(result_image)
+    img_save.save_image("closure_test_j_kernel_5x5")
+    closure_cv = cv2.morphologyEx(img.return_image_object(), cv2.MORPH_CLOSE, kernel_5x5)
+    result_opening = cv2.hconcat([img.return_image_object(), result_image, closure_cv])
+    cv2.imshow('Closure: Original - Our code - CV Code', result_opening)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def test_outer_limit():
+    img = IP("j.png", 0)
+    kernel_5x5 = np.ones((5, 5), np.uint8)
+    outer_image = OL(img.return_image_object(), kernel_5x5)
+    result_image = outer_image.outer_limit()
+    img_save = SI(result_image)
+    img_save.save_image("outer_limit_test_j_kernel_5x5")
+
+
+def test_inner_limit():
+    img = IP("j.png", 0)
+    kernel_5x5 = np.ones((5, 5), np.uint8)
+    inner_image = IL(img.return_image_object(), kernel_5x5)
+    result_image = inner_image.inner_limit()
+    img_save = SI(result_image)
+    img_save.save_image("inner_limit_test_j_kernel_5x5")
+
+
 if __name__ == '__main__':
-    ### Testes de aritmética
+    ## Testes de aritmética
+    ### Imagem com imagem
     # test_subtraction()
     # test_addition()
     # test_multiplication()
     # test_division()
+    ### Imagem com valor
+    # test_value_subtraction()
+    # test_value_addition()
+    # test_value_multiplication()
+    # test_value_division()
+    # test_value_division_error()
 
     ##Testes de valor
-    #test_gray_simple_convert()
-    #test_gray_ponder_convert()
-    #test_red_channel()
-    #test_green_channel()
-    #test_blue_channel()
-    test_histogram()
+    # test_gray_simple_convert()
+    # test_gray_ponder_convert()
+    # test_red_channel()
+    # test_green_channel()
+    # test_blue_channel()
+    # test_histogram()
     # test_threshold()
     # test_negative_image()
 
     ## Testes de espaço
+
+    ### Teste morfologia matemática
+    # test_erode()
+    # test_dilate()
+    # test_opening()
+    # test_closing()
+    # test_outer_limit()
+    # test_inner_limit()
 
     ### Teste convolução imagens tons de cinza
     # test_gray_convolution_mask()
@@ -313,9 +507,12 @@ if __name__ == '__main__':
     # test_rgb_convolution_mask_detectar_relevos()
 
     ### Teste segmentação imagens gray
-    #test_gray_segmentation_roberts()
+    # test_gray_segmentation_roberts()
     # test_gray_segmentation_sobel()
+    # test_gray_segmentation_robinson()
+    ### Teste segmentação imagens rgb
     # test_rgb_segmentation_roberts()
     # test_rgb_segmentation_sobel()
+    # test_rgb_segmentation_robinson()
 
-    print("YO")
+    print("Fim Operacoes")
