@@ -32,8 +32,8 @@ class Convolution(object):
             self.convolution_image = np.zeros((self.row, self.col, 3), np.uint8)
             return self.__rgb_convolution_operator()
 
+    # Convolução de imagens sem canal
     def __gray_convolution_operator(self):
-        # Operação de convolução sem os canais rgb
         for i in range(self.start, self.row - self.start):
             for j in range(self.start, self.col - self.start):
                 start_row = i - self.start

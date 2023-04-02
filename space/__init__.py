@@ -1,4 +1,3 @@
-# Operação de ajuste para não estourar o valor do pixel de cada canal
 import cv2
 import numpy as np
 
