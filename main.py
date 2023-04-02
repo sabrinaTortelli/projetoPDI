@@ -251,7 +251,7 @@ def test_gray_segmentation_robinson():
 
 
 def test_rgb_segmentation_roberts():
-    # teste com imagem em tons de cinza
+    # teste com imagem em tons de cinza em 3 canais
     img = IP("gray_simple_test_joker.jpg", 1)
     roberts_image = SG(img.return_image_object())
     transformed_img = roberts_image.roberts()

@@ -112,6 +112,10 @@ class Segmentation(object):
                     self.image_result.itemset((row, col, 1), values[1])
                     self.image_result.itemset((row, col, 2), values[2])
 
+    # Operação que faz 8 convoluções - compara as imagens resultantes
+    # e busca o valor máximo obtido a aplicação de cada máscara em cada pixel
+    # e utiliza o valor máximo em uma nova imagem resultante
+    # Retorna a imagem resultante
     def robinson(self):
         print("Operação de Robinson")
         # Máscaras de Robinson
